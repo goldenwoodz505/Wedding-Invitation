@@ -1,0 +1,1711 @@
+/* ==========================================================================
+   Hosea & Zahra Digital Wedding Invitation
+   Style: Editorial Botanical Luxury
+   ========================================================================== */
+
+:root {
+  /* Core Color Palette */
+  --burgundy: #3A0B19;
+  --velvet: #591428;
+  --ivory: #F6F0E8;
+  --sand: #EDE3D7;
+  --gold: #C59B5F;
+  --bronze: #6E4B1B; /* WCAG AA 6.91:1 on Ivory, 6.17:1 on Sand */
+  --espresso: #241418;
+  --error-crimson: #8E1B28;
+
+  /* Hairlines */
+  --line-gold: rgba(197, 155, 95, 0.44);
+  --line-gold-strong: rgba(197, 155, 95, 0.78);
+  --line-velvet: rgba(89, 20, 40, 0.24);
+  --line-velvet-strong: rgba(89, 20, 40, 0.56);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Pinyon Script', cursive;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Motion */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Layout */
+  --shell-max: 440px;
+}
+
+/* Base Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: #1A040B;
+  color: var(--espresso);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.is-locked,
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Base Layer Interaction Affordances */
+a[href],
+button:not(:disabled),
+summary,
+select:not(:disabled),
+label[for],
+input[type="checkbox"]:not(:disabled),
+input[type="radio"]:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:disabled,
+select:disabled,
+input:disabled,
+textarea:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Accessible Focus Outlines */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.section--ivory :focus-visible,
+.section--sand :focus-visible,
+.modal__sheet :focus-visible {
+  outline-color: var(--burgundy);
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+figure,
+blockquote,
+ol,
+ul {
+  margin: 0;
+}
+
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* ==========================================================================
+   Desktop Ambient Blurred Backdrop & 440px Mobile-First Container
+   ========================================================================== */
+
+.desktop-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 25%, rgba(89, 20, 40, 0.7) 0%, transparent 50%),
+    radial-gradient(circle at 82% 76%, rgba(197, 155, 95, 0.16) 0%, transparent 45%),
+    linear-gradient(155deg, #1A040B 0%, #2E0814 50%, #150309 100%);
+}
+
+.desktop-backdrop__art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  opacity: 0.32;
+  user-select: none;
+}
+
+.desktop-backdrop__monogram {
+  font-family: var(--font-script);
+  font-size: clamp(10rem, 22vw, 18rem);
+  line-height: 0.9;
+  color: var(--gold);
+}
+
+.desktop-backdrop__date {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.45em;
+  color: var(--ivory);
+}
+
+.desktop-backdrop__veil {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(24, 4, 10, 0.52);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.invitation-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--shell-max);
+  min-height: 100dvh;
+  margin-inline: auto;
+  background-color: var(--ivory);
+  overflow-x: clip;
+}
+
+@media (min-width: 480px) {
+  .invitation-shell {
+    border-inline: 1px solid rgba(197, 155, 95, 0.25);
+    box-shadow: 0 32px 90px rgba(8, 1, 4, 0.72);
+  }
+}
+
+/* Full-Page Paper Grain Texture (opacity: 0.04) */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   Typography & Shared Editorial Primitives
+   ========================================================================== */
+
+.micro-label {
+  font-family: var(--font-body);
+  font-size: 0.625rem; /* 10px */
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+.micro-label--gold {
+  color: var(--gold);
+}
+
+.micro-label--wine {
+  color: var(--velvet);
+}
+
+.micro-label--bronze {
+  color: var(--bronze);
+}
+
+.monogram {
+  font-family: var(--font-script);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.section-heading {
+  margin-top: 0.65rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.1rem, 8.8vw, 2.625rem);
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  color: var(--burgundy);
+}
+
+.section-heading--light {
+  color: var(--ivory);
+}
+
+.body-copy {
+  margin-top: 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.72;
+  color: var(--espresso);
+}
+
+.hairline-rule {
+  display: block;
+  height: 1px;
+}
+
+.hairline-rule--gold-short {
+  width: 3.5rem;
+  margin-inline: auto;
+  background-color: var(--line-gold-strong);
+}
+
+/* Double Hairline Arch Frame */
+.arch-frame {
+  padding: 0.45rem;
+  border-radius: 999px 999px 0 0;
+}
+
+.arch-frame__inner {
+  border-radius: 999px 999px 0 0;
+}
+
+.arch-frame--cover {
+  width: min(100%, 286px);
+  border: 1px solid var(--line-gold);
+}
+
+.arch-frame__inner--cover {
+  padding: 2.85rem 1.25rem 2.25rem;
+  border: 1px solid var(--line-gold-strong);
+  background-color: rgba(89, 20, 40, 0.36);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.arch-frame--portrait {
+  width: min(74%, 248px);
+  border: 1px solid var(--line-velvet);
+  background-color: var(--ivory);
+}
+
+.arch-frame__inner--portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--line-gold-strong);
+  background: linear-gradient(180deg, var(--ivory) 0%, var(--sand) 100%);
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0;
+}
+
+.arch-frame__inner--portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.portrait-img--groom {
+  transform: scale(1.28);
+  transform-origin: 48% 78%;
+}
+
+.portrait-img--bride {
+  transform: scale(1.28);
+  transform-origin: 48% 70%;
+}
+
+/* Editorial Buttons (min 46px height) */
+.btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background-color 240ms var(--ease-editorial),
+    color 240ms var(--ease-editorial),
+    border-color 240ms var(--ease-editorial),
+    transform 240ms var(--ease-editorial);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn--ivory {
+  background-color: var(--ivory);
+  color: var(--burgundy);
+  border-color: var(--ivory);
+}
+
+.btn--ivory:hover:not(:disabled) {
+  background-color: var(--sand);
+  border-color: var(--gold);
+}
+
+.btn--burgundy {
+  background-color: var(--burgundy);
+  color: var(--ivory);
+  border-color: var(--burgundy);
+}
+
+.btn--burgundy:hover:not(:disabled) {
+  background-color: var(--velvet);
+  border-color: var(--velvet);
+}
+
+.btn--outline-gold {
+  background-color: transparent;
+  color: var(--ivory);
+  border-color: var(--gold);
+}
+
+.btn--outline-gold:hover:not(:disabled) {
+  background-color: rgba(197, 155, 95, 0.14);
+}
+
+.btn--outline-velvet {
+  background-color: transparent;
+  color: var(--burgundy);
+  border-color: var(--velvet);
+}
+
+.btn--outline-velvet:hover:not(:disabled) {
+  background-color: var(--burgundy);
+  color: var(--ivory);
+}
+
+.btn--full {
+  width: 100%;
+}
+
+/* Subtle Shimmer Effect on Cover CTA */
+.btn--shimmer {
+  background-color: var(--ivory);
+  color: var(--burgundy);
+  border-color: var(--gold);
+}
+
+.btn--shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(197, 155, 95, 0.34) 50%,
+    transparent 80%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.btn--shimmer:hover {
+  background-color: var(--sand);
+}
+
+/* ==========================================================================
+   1. Full-Screen Cover Gate (#3A0B19 Deep Burgundy)
+   ========================================================================== */
+
+.cover-gate {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: var(--shell-max);
+  height: 100dvh;
+  margin-inline: auto;
+  z-index: 50;
+  background-color: var(--burgundy);
+  color: var(--ivory);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.75rem;
+  overflow: hidden;
+  transition:
+    transform 920ms var(--ease-editorial),
+    opacity 680ms var(--ease-editorial),
+    visibility 920ms var(--ease-editorial);
+}
+
+.cover-gate.is-opened {
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cover-gate__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.monogram--cover {
+  font-size: clamp(2.75rem, 11vw, 3.35rem);
+  color: var(--gold);
+}
+
+.cover-names {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.35rem, 10vw, 2.85rem);
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  color: var(--ivory);
+}
+
+.cover-date {
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.cover-guest {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 100%;
+}
+
+.cover-guest__label {
+  font-size: 0.75rem;
+  color: rgba(246, 240, 232, 0.85);
+}
+
+.cover-guest__name {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ivory);
+  overflow-wrap: anywhere;
+}
+
+.cover-gate__cta {
+  width: min(100%, 248px);
+}
+
+/* ==========================================================================
+   Layered Botanical SVG Placement
+   ========================================================================== */
+
+.botanical {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.botanical--cover-tr {
+  top: -14px;
+  right: -24px;
+  width: 195px;
+  height: auto;
+  transform-origin: top right;
+}
+
+.botanical--cover-bl {
+  bottom: -16px;
+  left: -24px;
+  width: 195px;
+  height: auto;
+  transform-origin: bottom left;
+}
+
+.botanical--hero-tr {
+  top: -12px;
+  right: -24px;
+  width: 175px;
+  height: auto;
+  transform-origin: top right;
+}
+
+.botanical--schedule-bl {
+  bottom: -8px;
+  left: -22px;
+  width: 155px;
+  height: auto;
+  transform-origin: bottom left;
+}
+
+.botanical--footer {
+  position: static;
+  margin-inline: auto;
+  margin-bottom: 1.25rem;
+  width: 156px;
+  height: auto;
+}
+
+/* ==========================================================================
+   Sections & Organic SVG Wave Dividers
+   ========================================================================== */
+
+.section {
+  position: relative;
+  padding: 3.5rem 1.75rem;
+  overflow: hidden;
+}
+
+.section--ivory {
+  background-color: var(--ivory);
+  color: var(--espresso);
+}
+
+.section--sand {
+  background-color: var(--sand);
+  color: var(--espresso);
+}
+
+.section--burgundy {
+  background-color: var(--burgundy);
+  color: var(--ivory);
+}
+
+.wave-divider {
+  line-height: 0;
+  margin-block: -1px;
+}
+
+.wave-divider svg {
+  width: 100%;
+  height: 46px;
+}
+
+.wave-divider--sand-to-burgundy,
+.wave-divider--burgundy-to-sand {
+  background-color: var(--sand);
+}
+
+.wave-divider--burgundy-to-ivory,
+.wave-divider--ivory-to-burgundy {
+  background-color: var(--ivory);
+}
+
+/* ==========================================================================
+   2. Hero Section (#F6F0E8 Warm Ivory)
+   ========================================================================== */
+
+.hero-section {
+  padding-top: 3.25rem;
+  padding-bottom: 3rem;
+}
+
+.hero-meta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-velvet);
+}
+
+.hero-meta__date {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  letter-spacing: 0.16em;
+  color: var(--burgundy);
+}
+
+.hero-title-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: 2.25rem;
+}
+
+.display-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.75rem, 13vw, 3.25rem); /* 44px - 52px */
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--burgundy);
+}
+
+.display-title__line {
+  display: block;
+}
+
+.display-title__amp {
+  display: inline-block;
+  font-family: var(--font-script);
+  font-size: clamp(2.5rem, 11vw, 3.15rem);
+  color: var(--bronze);
+  margin-left: 0.35rem;
+  margin-block: -0.1em;
+  line-height: 0.9;
+}
+
+.display-title__line--offset {
+  padding-left: 2.5rem;
+  font-style: italic;
+}
+
+.hero-subtitle {
+  margin-top: 1.15rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--velvet);
+}
+
+.hero-quote {
+  position: relative;
+  z-index: 2;
+  margin-top: 2.25rem;
+  padding-left: 1.125rem;
+  border-left: 1px solid var(--gold);
+}
+
+.hero-quote__text {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.58;
+  color: var(--espresso);
+}
+
+.hero-quote__cite {
+  margin-top: 0.65rem;
+}
+
+/* Minimalist Live Countdown (Thin Vertical Dividers, No Heavy Boxes) */
+.countdown-strip {
+  position: relative;
+  z-index: 2;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-velvet);
+}
+
+.countdown-strip__label {
+  margin-bottom: 1rem;
+}
+
+.countdown-ledger {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.45rem 0.25rem;
+}
+
+.countdown-unit + .countdown-unit {
+  border-left: 1px solid var(--line-velvet);
+}
+
+.countdown-unit__num {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.9rem, 8vw, 2.35rem);
+  line-height: 1;
+  color: var(--burgundy);
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-unit__label {
+  margin-top: 0.4rem;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--bronze);
+}
+
+.countdown-status {
+  margin-top: 0.85rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--velvet);
+}
+
+/* ==========================================================================
+   3. Profil Mempelai (Asymmetric Layout + Giant Watermark &)
+   ========================================================================== */
+
+.couple-section {
+  padding-block: 3.5rem;
+  border-top: 1px solid var(--line-velvet);
+}
+
+.couple-watermark {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-script);
+  font-size: 16.5rem;
+  line-height: 1;
+  color: var(--burgundy);
+  opacity: 0.06;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.section-intro {
+  position: relative;
+  z-index: 2;
+  max-width: 34ch;
+}
+
+.profile-block {
+  position: relative;
+  z-index: 2;
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.profile-block--groom {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.profile-block--bride {
+  margin-top: 3rem;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.monogram--portrait {
+  font-size: 4.5rem;
+  color: var(--burgundy);
+}
+
+.portrait-slot {
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--velvet);
+}
+
+.profile-name {
+  margin-top: 0.45rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 8vw, 2.3rem);
+  line-height: 1;
+  color: var(--burgundy);
+}
+
+.profile-parents {
+  margin-top: 0.55rem;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--espresso);
+}
+
+/* ==========================================================================
+   4. Rangkaian Acara (#3A0B19 Deep Burgundy)
+   ========================================================================== */
+
+.schedule-section {
+  padding-block: 3.25rem;
+}
+
+.schedule-head {
+  position: relative;
+  z-index: 2;
+}
+
+.event-list {
+  position: relative;
+  z-index: 2;
+  margin-top: 2.25rem;
+  border-top: 1px solid var(--line-gold);
+}
+
+.event-item {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 1rem;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--line-gold);
+}
+
+.event-item__num {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1.2;
+}
+
+.event-item__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 1.04;
+  color: var(--ivory);
+}
+
+.event-item__time {
+  margin-top: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.event-item__desc {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.62;
+  color: rgba(246, 240, 232, 0.88);
+}
+
+.venue-block {
+  position: relative;
+  z-index: 2;
+  margin-top: 2rem;
+  padding: 1.65rem 1.35rem;
+  background-color: var(--velvet);
+  border: 1px solid var(--line-gold);
+}
+
+.venue-block__name {
+  margin-top: 0.65rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1.15;
+  color: var(--ivory);
+}
+
+.venue-block__address {
+  margin-top: 0.45rem;
+  font-size: 0.875rem;
+  line-height: 1.62;
+  color: rgba(246, 240, 232, 0.9);
+}
+
+.venue-block__actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ==========================================================================
+   5. Galeri Foto Prewedding (Asymmetric Editorial Lookbook)
+   ========================================================================== */
+
+.gallery-section {
+  padding-block: 3.5rem;
+}
+
+.gallery-spread {
+  margin-top: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.gallery-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.gallery-row--stagger .gallery-item:nth-child(2) {
+  margin-top: 2rem;
+}
+
+.gallery-item {
+  margin: 0;
+  min-width: 0;
+}
+
+.gallery-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--line-velvet);
+  background-color: var(--ivory);
+  overflow: hidden;
+  isolation: isolate;
+  text-align: left;
+  transition: border-color 240ms var(--ease-editorial), transform 280ms var(--ease-editorial);
+}
+
+.gallery-card:hover {
+  border-color: var(--burgundy);
+}
+
+.gallery-card:active {
+  transform: scale(0.99);
+}
+
+.gallery-card--arch {
+  padding: 0.45rem;
+  border-radius: 999px 999px 0 0;
+}
+
+.gallery-card--arch .gallery-card__media {
+  border-radius: 999px 999px 0 0;
+  border: 1px solid var(--line-gold-strong);
+  aspect-ratio: 3 / 4;
+}
+
+.gallery-card--tall .gallery-card__media {
+  aspect-ratio: 2 / 3;
+}
+
+.gallery-card--wide .gallery-card__media {
+  aspect-ratio: 3 / 2;
+}
+
+.gallery-card__media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--ivory) 0%, #E5D9CA 100%);
+}
+
+.gallery-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 520ms var(--ease-editorial);
+}
+
+.gallery-card:hover .gallery-card__img {
+  transform: scale(1.03);
+}
+
+.gallery-card__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  gap: 0.35rem;
+}
+
+.gallery-card__index {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--burgundy);
+}
+
+.gallery-card__slot-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--velvet);
+}
+
+.gallery-card__slot-file {
+  font-size: 0.6875rem;
+  color: var(--bronze);
+}
+
+/* Gallery Lightbox Modal */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(18, 3, 8, 0.9);
+}
+
+.lightbox__stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: calc(var(--shell-max) - 1rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lightbox__close {
+  align-self: flex-end;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background-color: var(--burgundy);
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  color: var(--ivory);
+}
+
+.lightbox__close:hover {
+  background-color: var(--velvet);
+}
+
+.lightbox__figure {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.lightbox__img {
+  width: 100%;
+  max-height: 68dvh;
+  height: auto;
+  object-fit: contain;
+  border: 1px solid var(--line-gold);
+  background-color: var(--burgundy);
+}
+
+.lightbox__caption {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--ivory);
+  text-align: center;
+}
+
+.lightbox__controls {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.lightbox__nav-btn {
+  width: 100%;
+}
+
+/* ==========================================================================
+   6. Amplop Digital & RSVP (#F6F0E8 Warm Ivory)
+   ========================================================================== */
+
+.gift-section {
+  padding-top: 3.25rem;
+  padding-bottom: 2.5rem;
+}
+
+.gift-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.gift-intro__btn {
+  margin-top: 1.4rem;
+}
+
+.rsvp-section {
+  padding-top: 2.75rem;
+  padding-bottom: 3.25rem;
+  border-top: 1px solid var(--line-velvet);
+}
+
+.rsvp-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+@media (max-width: 340px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.form-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+}
+
+.form-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.7rem 0.85rem;
+  background-color: var(--sand);
+  border: 1px solid var(--line-velvet-strong);
+  border-radius: 2px;
+  color: var(--espresso);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  transition: border-color 200ms var(--ease-editorial), background-color 200ms var(--ease-editorial);
+}
+
+.form-input::placeholder {
+  color: #634C52; /* WCAG AA >= 6.0:1 on Sand */
+}
+
+.form-input:focus {
+  border-color: var(--burgundy);
+  background-color: #FBF8F3;
+}
+
+.form-input[aria-invalid="true"] {
+  border-color: var(--error-crimson);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 104px;
+}
+
+.form-error {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--error-crimson);
+}
+
+.form-feedback {
+  padding: 0.85rem 1rem;
+  border-left: 2px solid var(--burgundy);
+  background-color: var(--sand);
+  font-size: 0.875rem;
+  color: var(--espresso);
+}
+
+.form-feedback--error {
+  border-left-color: var(--error-crimson);
+  color: var(--error-crimson);
+}
+
+/* Wishes Board */
+.wishes-board {
+  margin-top: 2.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line-velvet);
+}
+
+.wishes-board__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.wishes-board__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.65rem;
+  color: var(--burgundy);
+}
+
+.wishes-board__count {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--velvet);
+}
+
+.state-box {
+  padding: 1.25rem 1rem;
+  border: 1px dashed var(--line-velvet-strong);
+  background-color: rgba(237, 227, 215, 0.55);
+}
+
+.state-box--error {
+  border-style: solid;
+  border-color: var(--error-crimson);
+  color: var(--error-crimson);
+}
+
+.state-box__text {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.wishes-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.wish-item {
+  padding-block: 1.15rem;
+  border-bottom: 1px solid var(--line-velvet);
+}
+
+.wish-item:first-child {
+  border-top: 1px solid var(--line-velvet);
+}
+
+.wish-item__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 0.75rem;
+}
+
+.wish-item__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--burgundy);
+}
+
+.wish-item__badge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bronze);
+}
+
+.wish-item__message {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  line-height: 1.62;
+  color: var(--espresso);
+  overflow-wrap: anywhere;
+}
+
+.wish-item__time {
+  margin-top: 0.45rem;
+  font-size: 0.75rem;
+  color: var(--velvet);
+}
+
+/* ==========================================================================
+   6. Closing Footer (#3A0B19 Deep Burgundy)
+   ========================================================================== */
+
+.closing-footer {
+  text-align: center;
+  padding-top: 3rem;
+  padding-bottom: calc(6.75rem + env(safe-area-inset-bottom, 0px));
+}
+
+.closing-footer__text {
+  margin-top: 1rem;
+  margin-inline: auto;
+  max-width: 34ch;
+  font-size: 0.9rem;
+  line-height: 1.72;
+  color: rgba(246, 240, 232, 0.9);
+}
+
+.closing-footer__signoff {
+  margin-top: 1.75rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.125rem;
+  color: var(--gold);
+}
+
+.monogram--footer {
+  margin-top: 0.5rem;
+  font-size: 3rem;
+  color: var(--gold);
+}
+
+.closing-footer__couple {
+  margin-top: 0.25rem;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2rem;
+  color: var(--ivory);
+}
+
+.closing-footer__families {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: rgba(246, 240, 232, 0.8);
+}
+
+/* ==========================================================================
+   Floating Vinyl Music Disc & Compact Bottom Nav
+   ========================================================================== */
+
+.music-disc {
+  position: fixed;
+  right: max(1rem, calc(50% - (var(--shell-max) / 2) + 1rem));
+  bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background-color: var(--burgundy);
+  color: var(--ivory);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 22px rgba(18, 3, 8, 0.42);
+  transition: transform 240ms var(--ease-editorial), background-color 240ms var(--ease-editorial);
+}
+
+.music-disc:hover {
+  background-color: var(--velvet);
+}
+
+.music-disc__vinyl {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--velvet) 0%, #24060F 65%, var(--burgundy) 100%);
+  display: grid;
+  place-items: center;
+}
+
+.music-disc__grooves {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  border: 1px dashed rgba(197, 155, 95, 0.6);
+}
+
+.music-disc__center {
+  position: relative;
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--gold);
+  color: var(--burgundy);
+  display: grid;
+  place-items: center;
+}
+
+.music-disc__icon--pause {
+  display: none;
+}
+
+.music-disc.is-playing .music-disc__icon--play {
+  display: none;
+}
+
+.music-disc.is-playing .music-disc__icon--pause {
+  display: block;
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  width: min(calc(100% - 1.5rem), calc(var(--shell-max) - 1.5rem));
+  z-index: 40;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background-color: rgba(58, 11, 25, 0.96);
+  border: 1px solid var(--line-gold);
+  border-radius: 2px;
+}
+
+.bottom-nav__link {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.15rem;
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ivory);
+  border-bottom: 2px solid transparent;
+  transition: color 200ms var(--ease-editorial), border-color 200ms var(--ease-editorial);
+}
+
+.bottom-nav__link:hover,
+.bottom-nav__link.is-active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ==========================================================================
+   Amplop Digital Modal (Rekening & QRIS)
+   ========================================================================== */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(20, 4, 9, 0.74);
+}
+
+.modal__sheet {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--shell-max);
+  max-height: 86dvh;
+  overflow-y: auto;
+  background-color: var(--ivory);
+  color: var(--espresso);
+  border-top: 2px solid var(--gold);
+  padding: 1.75rem 1.5rem calc(2rem + env(safe-area-inset-bottom, 0px));
+}
+
+.modal__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line-velvet);
+}
+
+.modal__title {
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.85rem;
+  line-height: 1;
+  color: var(--burgundy);
+}
+
+.modal__close {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background-color: transparent;
+  border: 1px solid var(--line-velvet-strong);
+  border-radius: 2px;
+  color: var(--burgundy);
+}
+
+.modal__close:hover {
+  background-color: var(--burgundy);
+  color: var(--ivory);
+}
+
+.modal__intro {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: var(--espresso);
+}
+
+.gift-accounts {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gift-account {
+  padding: 1.15rem;
+  background-color: var(--sand);
+  border: 1px solid var(--line-velvet);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.gift-account__bank {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--velvet);
+}
+
+.gift-account__number {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--burgundy);
+  overflow-wrap: anywhere;
+}
+
+.gift-account__holder {
+  font-size: 0.875rem;
+  color: var(--espresso);
+}
+
+.gift-account__btn {
+  margin-top: 0.65rem;
+  align-self: flex-start;
+}
+
+/* ==========================================================================
+   Toast Notification
+   ========================================================================== */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+  width: min(calc(100% - 2rem), calc(var(--shell-max) - 2rem));
+  z-index: 80;
+  padding: 0.85rem 1.1rem;
+  background-color: var(--espresso);
+  color: var(--ivory);
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* ==========================================================================
+   Motion & Keyframes (Respects prefers-reduced-motion)
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 720ms var(--ease-editorial) var(--delay, 0ms),
+      transform 720ms var(--ease-editorial) var(--delay, 0ms);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .botanical--cover-tr,
+  .botanical--hero-tr {
+    animation: sway 6s ease-in-out infinite alternate;
+  }
+
+  .botanical--cover-bl,
+  .botanical--schedule-bl {
+    animation: sway 6s ease-in-out infinite alternate-reverse;
+  }
+
+  .btn--shimmer::after {
+    animation: shimmer-sweep 3.6s var(--ease-editorial) infinite;
+  }
+
+  .music-disc.is-playing .music-disc__vinyl {
+    animation: spin-vinyl 8s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .cover-gate {
+    transition: opacity 200ms ease, visibility 200ms ease;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-2deg) translateY(0);
+  }
+  to {
+    transform: rotate(2.2deg) translateY(4px);
+  }
+}
+
+@keyframes shimmer-sweep {
+  0%, 60% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes spin-vinyl {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

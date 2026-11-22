@@ -1,0 +1,9 @@
+# Backup foto resolusi mentah (tidak ikut di-push ke GitHub Pages)
+assets/image-originals/
+
+# Konfigurasi agent lokal
+.agent/
+
+# File sistem
+.DS_Store
+Thumbs.db
