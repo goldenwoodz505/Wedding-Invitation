@@ -8,7 +8,7 @@
     eventTitle: 'Pernikahan Hosea & Zahra',
     songTitle: "You're Still the One - Shania Twain",
     eventStartIso: '2026-12-13T16:00:00+07:00',
-    eventEndIso: '2026-12-13T18:00:00+07:00',
+    eventEndIso: '2026-12-13T20:00:00+07:00',
 
     venueName: 'Astanaraya Suites Hotel',
     venueAddress: 'Jl. Ciledug Raya No. 17, Kreo Selatan, Kec. Larangan, Kota Tangerang, Banten 15156',
@@ -310,7 +310,7 @@
         `DTSTART:${toIcsUtc(INVITATION_CONFIG.eventStartIso)}`,
         `DTEND:${toIcsUtc(INVITATION_CONFIG.eventEndIso)}`,
         `SUMMARY:${escapeIcs(INVITATION_CONFIG.eventTitle)}`,
-        'DESCRIPTION:Akad Nikah: 16:00 - 17:00 WIB\\nResepsi: 17:00 - 18:00 WIB\\nPernikahan Hosea Dicky Pratama & Zahra Aqila.',
+        'DESCRIPTION:Akad Nikah: 16.00 - 17.00 WIB\\nResepsi: 17.00 - 20.00 WIB\\nPernikahan Hosea Dicky Pratama & Zahra Aqila.',
         `LOCATION:${escapeIcs(location)}`,
         'END:VEVENT',
         'END:VCALENDAR',
